@@ -1,6 +1,6 @@
 <?php
 /** This script creates needed tables in database at install time.
- * @version      $Id: newtables.php,v 1.2 2004/03/08 01:12:22 mbertier Exp $
+ * @version      $Id: newtables.php,v 1.3 2004/03/13 15:56:28 mbertier Exp $
  * @package      Postnuke
  * @subpackage   Install
  */
@@ -21,8 +21,11 @@ function dosql($table,$sql) {
    echo "<br><font class=\"pn-sub\">".$table." "._MADE."</font>";
 }
 
+# -- Connect to database
 $dbconn = dbconnect($dbhost, $dbuname, $dbpass, $dbname, $dbtype);
 
+
+# -- _blocks
 $table = $prefix.'_blocks';
 $sql = "
 CREATE TABLE ".$prefix."_blocks (
@@ -43,6 +46,7 @@ CREATE TABLE ".$prefix."_blocks (
 ";
 dosql($table,$sql);
 
+# -- _blocks_buttons
 $table = $prefix.'_blocks_buttons';
 $sql = "
 CREATE TABLE ".$prefix."_blocks_buttons (
@@ -56,6 +60,7 @@ CREATE TABLE ".$prefix."_blocks_buttons (
 ";
 dosql($table,$sql);
 
+# -- _counter
 $table = $prefix.'_counter';
 $sql = "
 CREATE TABLE ".$prefix."_counter (
@@ -66,7 +71,7 @@ CREATE TABLE ".$prefix."_counter (
 ";
 dosql($table,$sql);
 
-
+# -- _group_membership
 $table = $prefix.'_group_membership';
 $sql = "
 CREATE TABLE ".$prefix."_group_membership (
@@ -76,6 +81,7 @@ CREATE TABLE ".$prefix."_group_membership (
 ";
 dosql($table,$sql);
 
+# -- _group_perms
 $table = $prefix.'_group_perms';
 $sql = "
 CREATE TABLE ".$prefix."_group_perms (
@@ -92,6 +98,7 @@ CREATE TABLE ".$prefix."_group_perms (
 ";
 dosql($table,$sql);
 
+# -- _groups
 $table = $prefix.'_groups';
 $sql = "
 CREATE TABLE ".$prefix."_groups (
@@ -102,7 +109,7 @@ CREATE TABLE ".$prefix."_groups (
 ";
 dosql($table,$sql);
 
-
+# -- _hooks
 $table = $prefix.'_hooks';
 $sql = "
 CREATE TABLE ".$prefix."_hooks (
@@ -120,56 +127,8 @@ CREATE TABLE ".$prefix."_hooks (
 ";
 dosql($table,$sql);
 
-$table = $prefix.'_languages_constant';
-$sql = "
-CREATE TABLE ".$prefix."_languages_constant (
-  pn_constant varchar(32) NOT NULL default '',
-  pn_file varchar(64) NOT NULL default '',
-  PRIMARY KEY  (pn_constant)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
 
-$table = $prefix.'_languages_file';
-$sql = "
-CREATE TABLE ".$prefix."_languages_file (
-  pn_target varchar(64) NOT NULL default '',
-  pn_source varchar(64) NOT NULL default '',
-  PRIMARY KEY  (pn_target,pn_source),
-  UNIQUE KEY source (pn_source)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-$table = $prefix.'_languages_translation';
-$sql = "
-CREATE TABLE ".$prefix."_languages_translation (
-  pn_language varchar(32) NOT NULL default '',
-  pn_constant varchar(32) NOT NULL default '',
-  pn_translation longblob NOT NULL default '',
-  pn_level tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (pn_constant,pn_language)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-
-$table = $prefix.'_message';
-$sql = "
-CREATE TABLE ".$prefix."_message (
-  pn_mid int(11) NOT NULL auto_increment,
-  pn_title varchar(100) NOT NULL default '',
-  pn_content text NOT NULL,
-  pn_date varchar(14) NOT NULL default '',
-  pn_expire mediumint(7) NOT NULL default '0',
-  pn_active tinyint(4) NOT NULL default '1',
-  pn_view tinyint(1) NOT NULL default '1',
-  pn_language varchar(30) NOT NULL default '',
-  PRIMARY KEY  (pn_mid)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
+# -- _module_vars
 $table = $prefix.'_module_vars';
 $sql = "
 CREATE TABLE ".$prefix."_module_vars (
@@ -184,6 +143,7 @@ CREATE TABLE ".$prefix."_module_vars (
 ";
 dosql($table,$sql);
 
+# -- _modules
 $table = $prefix.'_modules';
 $sql = "
 CREATE TABLE ".$prefix."_modules (
@@ -203,25 +163,7 @@ CREATE TABLE ".$prefix."_modules (
 ";
 dosql($table,$sql);
 
-
-$table = $prefix.'_priv_msgs';
-$sql = "
-CREATE TABLE ".$prefix."_priv_msgs (
-  pn_msg_id int(11) NOT NULL auto_increment,
-  pn_msg_image varchar(100) default NULL,
-  pn_subject varchar(100) default NULL,
-  pn_from_userid int(11) NOT NULL default '0',
-  pn_to_userid int(11) NOT NULL default '0',
-  pn_msg_time varchar(20) default NULL,
-  pn_msg_text text,
-  pn_read_msg tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (pn_msg_id),
-  KEY pn_to_userid (pn_to_userid)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-
+# -- _realms
 $table = $prefix.'_realms';
 $sql = "
 CREATE TABLE ".$prefix."_realms (
@@ -232,6 +174,7 @@ CREATE TABLE ".$prefix."_realms (
 ";
 dosql($table,$sql);
 
+# -- _referer
 $table = $prefix.'_referer';
 $sql = "
 CREATE TABLE ".$prefix."_referer (
@@ -255,22 +198,7 @@ CREATE TABLE ".$prefix."_related (
 ";
 dosql($table,$sql);
 
-
-$table = $prefix.'_seccont';
-$sql = "
-CREATE TABLE ".$prefix."_seccont (
-  pn_artid int(11) NOT NULL auto_increment,
-  pn_secid int(11) NOT NULL default '0',
-  pn_title text NOT NULL,
-  pn_content text NOT NULL,
-  pn_counter int(11) NOT NULL default '0',
-  pn_language varchar(30) NOT NULL default '',
-  PRIMARY KEY  (pn_artid)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-
+# -- _session_info
 $table = $prefix.'_session_info';
 $sql = "
 CREATE TABLE ".$prefix."_session_info (
@@ -285,42 +213,7 @@ CREATE TABLE ".$prefix."_session_info (
 ";
 dosql($table,$sql);
 
-$table = $prefix.'_stats_date';
-$sql = "
-CREATE TABLE ".$prefix."_stats_date (
-  pn_date varchar(80) NOT NULL default '',
-  pn_hits int(11) unsigned NOT NULL default '0'
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-$table = $prefix.'_stats_hour';
-$sql = "
-CREATE TABLE ".$prefix."_stats_hour (
-  pn_hour tinyint(2) unsigned NOT NULL default '0',
-  pn_hits int(11) unsigned NOT NULL default '0'
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-$table = $prefix.'_stats_month';
-$sql = "
-CREATE TABLE ".$prefix."_stats_month (
-  pn_month tinyint(2) unsigned NOT NULL default '0',
-  pn_hits int(11) unsigned NOT NULL default '0'
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-$table = $prefix.'_stats_week';
-$sql = "
-CREATE TABLE ".$prefix."_stats_week (
-  pn_weekday tinyint(1) unsigned NOT NULL default '0',
-  pn_hits int(11) unsigned NOT NULL default '0'
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
+# -- _user_data
 $table = $prefix.'_user_data';
 $sql = "
 CREATE TABLE ".$prefix."_user_data (
@@ -333,6 +226,7 @@ CREATE TABLE ".$prefix."_user_data (
 ";
 dosql($table,$sql);
 
+# -- _user_perms
 $table = $prefix.'_user_perms';
 $sql = "
 CREATE TABLE ".$prefix."_user_perms (
@@ -349,6 +243,7 @@ CREATE TABLE ".$prefix."_user_perms (
 ";
 dosql($table,$sql);
 
+# -- _user_property
 $table = $prefix.'_user_property';
 $sql = "
 CREATE TABLE ".$prefix."_user_property (
@@ -364,7 +259,7 @@ CREATE TABLE ".$prefix."_user_property (
 ";
 dosql($table,$sql);
 
-
+# -- _users
 $table = $prefix.'_users';
 $sql = "
 CREATE TABLE ".$prefix."_users (
