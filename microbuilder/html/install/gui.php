@@ -1,7 +1,7 @@
 <?php
 /** Provide gui rendering functions for the installer.
- * @version      $Id: gui.php,v 1.4 2004/03/19 10:23:24 mbertier Exp $ $Name:  $
- * @package      Install
+ * @version      $Id: gui.php,v 1.5 2004/03/19 14:43:45 mbertier Exp $ $Name:  $
+ * @package      Installer
  * @license      GPL
  * @author       Gregor J. Rothfuss
  */
@@ -25,7 +25,7 @@ function print_header() {
 <table width=\"80%\" align=\"center\"><tr><td>";
 }
 
-/** This function prints the "This is your setting" area (read-only confirmation form)
+/** Prints the "This is your setting" area (read-only confirmation form)
  * @param     bool      $border      toggles html border
  */
 function print_form_text( $border = 0 ) {
@@ -81,8 +81,8 @@ function print_form_editabletext($border = 0) {
 </table>";
 } 
 
-/** This function prints the <input type=hidden> area
- */
+/** Prints hidden fields of the form used to populate data
+ * along the install's screens. */
 function print_form_hidden() {
 
   // Language selection
@@ -106,7 +106,8 @@ function print_form_hidden() {
 <input type=\"hidden\" NAME=\"intranet\" value=\"$intranet\">";
 } 
 
-/***/
+
+/** Prints "database information" screen */
 function print_CHM_check() {
   global $currentlang;
   progress(40);
@@ -121,7 +122,7 @@ function print_CHM_check() {
 <input type=\"submit\" value=\"" . _BTN_SUBMIT . "\"></table></center></form></font>";
 } 
 
-/***/
+/** Prints "confirmation form" screen */
 function print_submit() {
   progress(50);
   echo "<br><center>
@@ -144,7 +145,7 @@ function print_submit() {
 </td></tr></table></form></center>";
 } 
 
-/***/
+/** Prints "change info" screen. */
 function print_change_info() {
   echo "
 <font class=\"pn-title\">Change Info</font><font class=\"pn-normal\">" . _CHANGE_INFO_1 . "<br><br>
@@ -157,7 +158,9 @@ function print_change_info() {
 <input type=\"submit\" value=\"" . _BTN_SUBMIT . "\"></center></form></font>";
 } 
 
-/***/
+/** Prints last confirmation form. this is
+ * where user can choose whether or not to create
+ * the database. */
 function print_new_install() {
   progress(60);
   echo "<center><br><font class=\"pn-title\">" . _NEWINSTALL . "</font><br><font class=\"pn-normal\"> " . _NEW_INSTALL_1 . "</font><br><br><center>";
@@ -176,7 +179,7 @@ function print_new_install() {
 <input type=\"submit\" value=\"" . _BTN_START . "\"></td></tr></table></form></font></center>";
 } 
 
-/***/
+/** Prints "Continue" button. */
 function print_start() {
   echo "<br>
 <form action=\"install.php\" method=\"post\"><center><table width=\"50%\" align=center>
@@ -189,7 +192,7 @@ function print_start() {
 <input type=\"submit\" value=\"" . _BTN_CONTINUE . "\"></td></tr></table></center></form>";
 } 
 
-/***/
+/** Prints  "Admin user information" form.(set login) */
 function print_continue() {
   progress(80);
   echo "<br>
@@ -216,7 +219,7 @@ function print_continue() {
 <input type=\"submit\" value=\"" . _BTN_SET_LOGIN . "\"></form></font></center>";
 } 
 
-/***/
+/** Prints "Login successfully set" screen*/
 function print_set_login() {
   echo "
 <form action=\"install.php\" method=\"post\"><center><table width=\"50%\">";
@@ -229,7 +232,7 @@ function print_set_login() {
 } 
 
 
-/***/
+/** Prints "Install OK, go to your site screen "*/
 function print_finish() {
   progress(100);
   echo "
@@ -261,7 +264,7 @@ function print_success() {
 </tr></table></center></form></font><br><br>";
 } 
 
-
+/** Prints "License agreement" screen. */
 function print_default() {
   progress(20);
   echo "<br>
@@ -283,7 +286,7 @@ function print_default() {
 </form></font><br><br>";
 } 
 
-/***/
+/** Prints "Language selection" screen*/
 function print_select_language() {
   progress(10);
   echo "<br><center>
@@ -299,7 +302,7 @@ function print_select_language() {
 </table></center></form>";
 } 
 
-/***/
+/** Prints screen footer. */
 function print_footer() {
   echo "
 </td></tr></table></td></tr><tr bgcolor=\"#000000\" height=\"3\"><td></td></tr><tr  bgcolor=\"#264CB7\" height=\"80\"><td><table width=\"100%\" ><tr><td height=\"20\"><center><font color=\"#ffffff\" size=\"2\"><a href=\"http://support.postnuke.com\" target=\"_blank\"><font color=\"#ffffff\" size=\"2\">Postnuke Support</font></a> - <a href=\"http://forums.postnuke.com\" target=\"_blank\"><font color=\"#ffffff\" size=\"2\">Support Forums</font></a><br><br><b>" . _FOOTER_1 . "</b></font></center></td></tr></table></td></tr></table></body></html>";

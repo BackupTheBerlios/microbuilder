@@ -1,7 +1,7 @@
 <?php 
 /** Declaration of various function used to check if installation is possible on target web server.
- * @version     $Id: check.php,v 1.3 2004/03/13 16:31:19 mbertier Exp $ $Name:  $
- * @package     Install
+ * @version     $Id: check.php,v 1.4 2004/03/19 14:43:45 mbertier Exp $ $Name:  $
+ * @package     Installer
  * @license     GPL
  * @author      Gregor J. Rothfuss
  */

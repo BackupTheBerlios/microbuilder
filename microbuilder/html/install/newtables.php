@@ -1,8 +1,8 @@
 <?php
 /** This script creates needed tables in database at install time.
- * @version      $Id: newtables.php,v 1.4 2004/03/18 11:11:21 mbertier Exp $
- * @package      Postnuke
- * @subpackage   Install
+ * @version      $Id: newtables.php,v 1.5 2004/03/19 14:43:45 mbertier Exp $
+ * @package      Installer
+ * @license      GPL
  */
 
 /** Execute creation of given $table.

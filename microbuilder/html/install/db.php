@@ -1,7 +1,7 @@
 <?php
 /** Provide common db functions for the installer.
- * @version      $Id: db.php,v 1.2 2004/03/13 04:40:39 mbertier Exp $ $Name:  $
- * @package      Install
+ * @version      $Id: db.php,v 1.3 2004/03/19 14:43:45 mbertier Exp $ $Name:  $
+ * @package      Installer
  * @licence      GPL
  * @author       Gregor J. Rothfuss
  */

@@ -11,19 +11,18 @@
  * The PostNuke project is free software released under the GNU License.  
  * Please read the credits file for more information on who has made this project possible.
  *
- * @version    $Id: install.php,v 1.3 2004/03/13 16:31:52 mbertier Exp $
+ * @version    $Id: install.php,v 1.4 2004/03/19 14:43:45 mbertier Exp $
+ * @package    Installer
  * @license    GPL
  *
  * @todo       Native "register_globals=off' compliancy
  */
 
-/** initialize vars, and include all necessary files **/
+/* initialize vars, and include all necessary files */
 
 
-/*	Allows Postnuke to work with register_globals set to off 
- *	Patch for php 4.2.x or greater
- */
-
+# --	Allows Postnuke to work with register_globals set to off 
+# --	Patch for php 4.2.x or greater
 if (phpversion() >= "4.2.0") {
     if ( ini_get('register_globals') != 1 ) {
         $supers = array('_REQUEST',
@@ -61,11 +60,13 @@ if (phpversion() >= "4.2.0") {
         }
         unset($supers);
     }
-}
+} # --
+
 
 # -- Do not restrict script execution time
 @set_time_limit(0);
 
+# -- Data access layer
 define('ADODB_DIR', 'pnadodb');
 require_once ("pnadodb/adodb.inc.php");
 
@@ -91,6 +92,7 @@ if(!isset($prefix)) {
     $dbname = $pnconfig['dbname'];
     $system = $pnconfig['system'];
     $encoded = $pnconfig['encoded'];   
+
 }
 
 # -- Decode username and password
