@@ -1,9 +1,15 @@
 <?php
 /** Déclaration de la classe MicroBuilder_PageController
- * @version    $Id: PageController.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: PageController.php,v 1.4 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
+
+
+/** Error codes */
+define( 'MB_NONEXISTENT_THEME',  1 );
+define( "MB_NONEXISTENT_MODULE", 2 );
+define( "MB_NONEXISTENT_BLOCK",  3 );
 
 
 /***/
@@ -11,6 +17,7 @@ require_once 'PEAR/ErrorStack.php';
 require_once 'Log.php';
 require_once 'Config.php';
 require_once 'core/MicroBuilder/ErrorCallback.php';
+require_once 'core/MicroBuilder/MessageCallback.php';
 require_once 'core/MicroBuilder/Module/Factory.php';
 require_once 'core/MicroBuilder/Module/Block/Factory.php';
 require_once 'core/MicroBuilder/Theme/Factory.php';
@@ -72,9 +79,9 @@ class MicroBuilder_PageController  {
             $module->executeAction( $req_data['action'], $req_data );
 
             // If something went wrong, display error message.
-            if ( $module->hasErrors() ) {
+            if ( $module->err->hasErrors() ) {
                 $err =& $module->err->pop();
-                $this->theme->addToMain( '<p class="error">' .$err['message']. '</p>' );
+                $this->theme->addToMain( '<p class="error">Module error: ' .$err['message']. '</p>' );
             }
         
             // Else add module to theme
@@ -141,8 +148,8 @@ class MicroBuilder_PageController  {
 
         // Load config
         $conf =& new Config;
-        //        $conf->parseConfig( '/home/mbertier/dev/htdocs/mb/conf/microbuilder-conf.ini', 'GenericConf' );
-        $conf->parseConfig( '/var/www/localhost/mb/conf/microbuilder-conf.ini', 'GenericConf' );
+        $conf->parseConfig( '/home/mbertier/dev/htdocs/mb/conf/microbuilder-conf.ini', 'GenericConf' );
+        //        $conf->parseConfig( '/var/www/localhost/mb/conf/microbuilder-conf.ini', 'GenericConf' );
         $confroot =& $conf->getRoot();
         $confarray = $confroot->toArray();
         $this->conf =& $confarray['root'];
@@ -155,6 +162,17 @@ class MicroBuilder_PageController  {
         $errcallback =& new MicroBuilder_ErrorCallback;
         $this->err->setDefaultCallback( array(&$errcallback, 'errorCallback') );
 
+        // -- Error messages templates
+        $msg = array( MB_NONEXISTENT_THEME  => "Requested theme '%theme%' could not be found.",
+                      MB_NONEXISTENT_MODULE => "Requested module '%module%' could not be found.",
+                      MB_NONEXISTENT_BLOCK  => "Requested block '%module%::%block%' could not be found."
+                      );
+        $this->err->setErrorMessageTemplate( $msg );
+        $msgcallback =& new MicroBuilder_MessageCallback;
+        $msgcallback->verbosity = $this->conf['error_verbosity'];
+        $this->err->setMessageCallback( array(&$msgcallback, 'messageCallback') );
+
+        
         // -- Logger
         $logpath = $this->conf['prefix'] . '/logs/' . $this->conf['log_file'];
         $log =& Log::singleton( 'file',$logpath, 'MicroBuilder error log' );
@@ -164,6 +182,7 @@ class MicroBuilder_PageController  {
         // Constants
         // -- this conf constants are needed by factories to access conf (factories are static)
         define( "MB_CONF_PREFIX", $this->conf['prefix'] );
+        define( "MB_ERROR_VERBOSITY", $this->conf['error_verbosity'] );
 
 
         // Theme

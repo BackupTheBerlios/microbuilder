@@ -1,11 +1,13 @@
 <?php
 /** Déclaration de la classe MicroBuilder_ErrorCallback
- * @version    $Id: ErrorCallback.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: ErrorCallback.php,v 1.4 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
 
+/***/
 require_once 'PEAR/ErrorStack.php';
+
 
 /** Description de la classe.
  * @package    core
@@ -18,7 +20,7 @@ class MicroBuilder_ErrorCallback  {
 # ---- PROPRIETES
     /** Verbosity level
      * @var int */
-    var $verbosity = 1;
+    var $verbosity = 0;
     
 
 # ---- METHODES PUBLIQUES
@@ -32,16 +34,15 @@ class MicroBuilder_ErrorCallback  {
     /** ErrorCallback */
     function errorCallback( $err ) {
         switch  ($err['level'] ) {
-        case 'err':
-            echo "kkk";
-            if ( $this->verbosity == 1 ) print_r($err);
+        case 'error':
             break;
         case 'fatal':
-            if ( $this->verbosity == 1 ) print_r($err);
             die( $err['message'] );
             break;
         }
     }
+
+
 
 # ---- ACCESSEURS / MUTATEURS
 

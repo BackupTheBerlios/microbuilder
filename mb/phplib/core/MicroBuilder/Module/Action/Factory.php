@@ -1,6 +1,6 @@
 <?php
 /** Déclaration de la classe MicroBuilder_ModuleAction_Factory
- * @version    $Id: Factory.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.4 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -59,14 +59,16 @@ class MicroBuilder_ModuleAction_Factory  {
     /** Renvoie le chemin vers l'action.
      */
     function _getActionClassPath( $module_name, $action_name ) {
-        define( "MB_NONEXISTENT_ACTION", 2);
+
         $path = MB_CONF_PREFIX . "/phplib/modules/$module_name/actions/$action_name.php";
         if ( ! file_exists($path) ) {
             $errstack =& PEAR_ErrorStack::singleton( $module_name );
             $errstack->push( MB_NONEXISTENT_ACTION,
                              'error',
-                             array( 'module' => $module_name, 'action' => $action_name ),
-                             "Unknown action '$module_name::$action_name'" );
+                             array( 'module' => $module_name, 
+                                    'action' => $action_name,
+                                    'file'   => $path )
+                              );
             return null;
         }
         return $path;
@@ -80,9 +82,8 @@ class MicroBuilder_ModuleAction_Factory  {
         return $actname;
     }
 
-    function __init() {
 
-    }
+    function __init() {}
 
 
     /* ZE2 compatibility trick*/

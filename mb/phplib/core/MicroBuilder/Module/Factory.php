@@ -1,11 +1,10 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Module_Factory
- * @version    $Id: Factory.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.4 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
 
-define( "MB_NONEXISTENT_MODULE", 1 );
 
 /** Fabrique de Modules
  * @package    core
@@ -50,8 +49,8 @@ class MicroBuilder_Module_Factory  {
             $errstack =& PEAR_ErrorStack::singleton( 'MicroBuilder' );
             $errstack->push( MB_NONEXISTENT_MODULE,
                              'error',
-                             array( 'module' => $module_name ),
-                             "Requested module '$module_name' does not exist." );
+                             array( 'module' => $module_name )
+                              );
             return null;
         }
         return $path;

@@ -1,6 +1,6 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Theme_Factory
- * @version    $Id: Factory.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.4 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -51,9 +51,10 @@ class MicroBuilder_Theme_Factory  {
         $path = MB_CONF_PREFIX . "/phplib/themes/$theme_name/$theme_name.php";
         if ( ! file_exists($path) ) {
             $errstack =& PEAR_ErrorStack::singleton( 'MicroBuilder' );
-            $errstack->push( 1, 'error',
-                             array('theme' => $theme_name), 
-                             "Requested theme '$theme_name' does not exist !" );
+            $errstack->push( MB_NONEXISTENT_THEME, 
+                             'fatal',
+                             array('theme' => $theme_name,
+                                   'path' => $path ) );
             return null;
         }
 

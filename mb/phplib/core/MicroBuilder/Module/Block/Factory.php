@@ -1,11 +1,11 @@
 <?php
 /** Déclaration de la classe MicroBuilder_ModuleBlock_Factory
- * @version    $Id: Factory.php,v 1.2 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.3 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
 
-define( "MB_NONEXISTENT_BLOCK", 1 );
+
 
 /** Fabrique de Blocks
  * @package    core
@@ -66,8 +66,9 @@ class MicroBuilder_ModuleBlock_Factory  {
             $errstack =& PEAR_ErrorStack::singleton( 'MicroBuilder' );
             $errstack->push( MB_NONEXISTENT_BLOCK,
                              'error',
-                             array( 'block' => $block_name ),
-                             "Requested block '$module_name::$block_name' does not exist." );
+                             array( 'block'  => $block_name,
+                                    'module' => $module_name )
+                              ); 
             return null;
         }
         return $path;

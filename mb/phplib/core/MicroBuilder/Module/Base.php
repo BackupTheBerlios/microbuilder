@@ -1,10 +1,16 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Module_Base
- * @version    $Id: Base.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
+ * @version    $Id: Base.php,v 1.4 2004/07/15 17:28:22 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
 
+/** Module-specific error codes */
+define( "MB_NONEXISTENT_ACTION", 4 );
+define( "MB_MISSING_ACTION_ARG", 41 );
+define( "MB_INVALID_ACTION_ARG", 42 );
+
+/***/
 require_once 'core/MicroBuilder/Module/Action/Factory.php';
 require_once 'core/MicroBuilder/Module/ErrorCallback.php';
 
@@ -27,6 +33,10 @@ class MicroBuilder_Module_Base  {
     /** Error stack
      * @var object PEAR_ErrorStack */
     var $err = null;
+
+    /** Conf params
+     * @var array */
+    var $conf = null;
 
 # ---- PROPRIETES
     /** Représentation littérale du module.
@@ -136,13 +146,21 @@ class MicroBuilder_Module_Base  {
     /** Initialisation */
     function __init() {
         // Error Handling
-        // Modules use their own ErrorStack and ErrorCallback
+        // -- Modules use their own ErrorStack and ErrorCallback
         $this->err =& PEAR_ErrorStack::singleton( $this->__name );
-        $callback =& new MicroBuilder_Module_ErrorCallback;
-        $callback->_module_name = $this->__name;
-        $this->err->setDefaultCallback( array(&$callback, 'errorCallback') );
+        $c =& new MicroBuilder_Module_ErrorCallback;
+        $c->__module = $this->__name;
+        $this->err->pushCallback( array(&$c, 'errorCallback') );
         
-        $log =& Log::singleton( 'file' );
+        $msg = array( MB_NONEXISTENT_ACTION => "Requested action '%module%::%action%' could not be found.",
+                      MB_MISSING_ACTION_ARG => "Missing action parameter '%name%'",
+                      MB_INVALID_ACTION_ARG => "Could not execute requested action '%module%::%action%': Invalid value '%val%' for parameter '%name%'" );
+
+        $this->err->setErrorMessageTemplate( $msg );
+        $m =& new MicroBuilder_MessageCallback;
+        $m->verbosity = MB_ERROR_VERBOSITY;
+        $this->err->setMessageCallback( array(&$m, 'messageCallback') );
+
     }
 
     
