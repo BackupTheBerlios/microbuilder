@@ -1,6 +1,6 @@
 <?php
-// File: $Id: newdata.php,v 1.1 2004/03/01 10:09:13 mbertier Exp $ $Name:  $
-
+// File: $Id: newdata.php,v 1.2 2004/03/10 20:46:31 mbertier Exp $ $Name:  $
+## -- DOWNGRADE
 // ml-stuff
 // we check if specific defines are already set
 // (from the corresponding /lang/xxx/global.php file)

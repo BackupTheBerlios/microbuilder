@@ -1,5 +1,5 @@
 <?php 
-// File: $Id: newinstall.php,v 1.1 2004/03/01 10:09:13 mbertier Exp $ $Name:  $
+// File: $Id: newinstall.php,v 1.2 2004/03/10 20:46:31 mbertier Exp $ $Name:  $
 // ----------------------------------------------------------------------
 // POST-NUKE Content Management System
 // Copyright (C) 2001 by the Post-Nuke Development Team.
@@ -41,6 +41,8 @@ function make_db($dbhost, $dbuname, $dbpass, $dbname, $prefix, $dbtype, $dbmake,
     } else {
         echo "<font class=\"pn-failed\">" . _MAKE_DB_3 . "</font>";
     } 
+
+    // Creation of all tables
     include("install/newtables.php");
 } 
 
