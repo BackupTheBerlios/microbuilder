@@ -1,38 +1,38 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Module_Factory
- * @version    $Id: Factory.php,v 1.1 2004/07/13 02:09:48 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.2 2004/07/13 02:17:53 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
 
-
+define( "MB_NONEXISTENT_MODULE", 1 );
 
 /** Fabrique de Modules
  * @package    core
+ * @subpackage factories
  * @todo       (ttes Factory: Scanner les modules au démarrage et créer une base de registre -- voir pour les perfs (cache...)
  */
 class MicroBuilder_Module_Factory  {
 
 # ---- PROPRIETES
-    var $_modules = array();
 
 
 # ---- METHODES PUBLIQUES
 
     /** Constructeur. */
-    function MicroBuilder_Module_Factory () {
-        
-    }
+    function MicroBuilder_Module_Factory () {}
 
     /** Fabrique de modules. 
      * @param      string      $module_name */
     function make( $module_name, $params = null ) {
-
-        require_once MicroBuilder_Module_Factory::_getModuleClassPath( $module_name );
-        $modclass = "Module_$module_name";
-        $m =& new $modclass;
+        $path = MicroBuilder_Module_Factory::_getModuleClassPath( $module_name );
+        if ( $path ) {
+            require_once $path;
+            $modclass = "Module_$module_name";
+            $m =& new $modclass;
         
-        return $m;
+            return $m;
+        }
     }
 
 # ---- ACCESSEURS / MUTATEURS
@@ -45,7 +45,15 @@ class MicroBuilder_Module_Factory  {
      * @param      string      $module_name
      */
     function _getModuleClassPath( $module_name ) {
-        $path = "modules/$module_name/$module_name.php";
+        $path = $_SERVER['DOCUMENT_ROOT'] . "/mb/phplib/modules/$module_name/$module_name.php";
+        if ( ! file_exists($path) ) {
+            $errstack =& PEAR_ErrorStack::singleton( 'MicroBuilder' );
+            $errstack->push( MB_NONEXISTENT_MODULE,
+                             'error',
+                             array( 'module' => $module_name ),
+                             "Requested module '$module_name' does not exist." );
+            return null;
+        }
         return $path;
     }
 

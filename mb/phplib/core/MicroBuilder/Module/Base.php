@@ -1,6 +1,6 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Module_Base
- * @version    $Id: Base.php,v 1.1 2004/07/13 02:09:48 mbertier Exp $
+ * @version    $Id: Base.php,v 1.2 2004/07/13 02:17:53 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -11,6 +11,16 @@ require_once 'core/MicroBuilder/Module/Action/Factory.php';
  * @package    core
  */
 class MicroBuilder_Module_Base  {
+
+    var $__name = null;
+    var $__summary = null;
+    var $__default_action = null;
+
+
+# ---- SLOTS
+    /** Error stack
+     * @var object PEAR_ErrorStack */
+    var $err = null;
 
 # ---- PROPRIETES
     /** Représentation littérale du module.
@@ -31,24 +41,20 @@ class MicroBuilder_Module_Base  {
      * @param      array       $params           Tableau de paramètres nommés. 
      */
     function executeAction( $action_name, $params = null ) {
-        define( 'MICROBUILDER_UNREGISTERED_ACTION', 1 );
-        if ( ! $this->isRegisteredAction($action_name) ) { 
-            $this->_errstack->push( MICROBUILDER_UNREGISTERED_ACTION, 
-                                    'error',
-                                    array( 'action' => $action_name ),
-                                    "Requested action '$action_name' is not registered with module.");
-            return false; 
-        }
+        
+        // Execute default action if no action requested
+        if ( empty($action_name) ) $action_name = $this->__default_action;
 
         // Exécution de l'action
         $action =& $this->_makeAction( $action_name );
 
-        if ( $this->_errstack->hasErrors() ) return;
+        // Check if action creation was ok
+        if ( $this->err->hasErrors() ) return;
 
         $action->execute( $params );
 
         $this->_addExecutedAction( $action );
-
+        
         return;
     }
 
@@ -69,19 +75,13 @@ class MicroBuilder_Module_Base  {
         }
     }
 
-    /** Permet de savoir si une action est enregistrée. 
-     * @param      string      $action_name
-     * @return     bool 
+
+    /** Returns module URI 
+     * @return       string 
      */
-    function isRegisteredAction( $action_name ) { return true; }
-    
-    /** Mise à disposition d'une nouvelle action. */
-    function registerAction( $action_name, $action_class, $action_classpath ) {}
-
-
-    /** Déréférencement d'une action de module. */
-    function unRegisterAction( $action_name ) {}
-
+    function getURI() {
+        return "/mb/www/test.php?module=$this->__name";
+    }
 
     /** Installation du module. */
     function install() {}
@@ -94,7 +94,7 @@ class MicroBuilder_Module_Base  {
     /** Raccourci
      */
     function hasErrors() {
-        return $this->_errstack->hasErrors();
+        return $this->err->hasErrors();
     }
 
 # ---- ACCESSEURS / MUTATEURS
@@ -104,15 +104,25 @@ class MicroBuilder_Module_Base  {
 
     /** Fabrique d'Actions */
     function _makeAction( $action_name, $params = null ) {
-        $a =& Module_Action_Factory::make( $this->name, $action_name, $params );
+        $a =& MicroBuilder_ModuleAction_Factory::make( $this->__name, $action_name, $params );
         return $a;
     }
 
 
     /** */
     function _addExecutedAction( &$action ) {
-        $this->_executedActions[] = $action;
+        $this->_executedActions[$action->__name] = $action;
     }
+
+
+    function _getActionsOutput() {
+        $str = '';
+        foreach ($this->_executedActions as $a ) {
+            $str .= $a->toString();
+        }
+        return $str;
+    }
+
 
     /* ZE2 compatibility trick*/
     function __clone() { return $this; }
@@ -120,8 +130,9 @@ class MicroBuilder_Module_Base  {
     /** Initialisation */
     function __init() {
         // Error Handling
-        // Modules use their own ErrorStack
-        $this->_errstack =& PEAR_ErrorStack::singleton( $this->name );
+        // Modules use their own ErrorStack and ErrorCallback
+        $this->err =& PEAR_ErrorStack::singleton( $this->__name );
+        
         $log =& Log::singleton( 'file' );
     }
 
