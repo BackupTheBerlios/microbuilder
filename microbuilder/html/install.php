@@ -11,7 +11,7 @@
  * The PostNuke project is free software released under the GNU License.  
  * Please read the credits file for more information on who has made this project possible.
  *
- * @version    $Id: install.php,v 1.2 2004/03/13 04:49:53 mbertier Exp $
+ * @version    $Id: install.php,v 1.3 2004/03/13 16:31:52 mbertier Exp $
  * @license    GPL
  *
  * @todo       Native "register_globals=off' compliancy
@@ -123,7 +123,7 @@ include_once 'install/newinstall.php';
 include_once 'install/gui.php';
 
 /** functions for accessing the DB */
-include_once 'install/db.php'
+include_once 'install/db.php';
 
 /** functions for various checks */
 include_once 'install/check.php';
