@@ -1,6 +1,6 @@
 <?php
 /** Provide gui rendering functions for the installer.
- * @version      $Id: gui.php,v 1.3 2004/03/13 16:44:59 mbertier Exp $ $Name:  $
+ * @version      $Id: gui.php,v 1.4 2004/03/19 10:23:24 mbertier Exp $ $Name:  $
  * @package      Install
  * @license      GPL
  * @author       Gregor J. Rothfuss
@@ -51,9 +51,9 @@ function print_form_text( $border = 0 ) {
 } 
 
 
-/** Prints form used to set settings. */
-function print_form_editabletext($border = 0)
-{
+/** Prints form used to set settings. 
+ * @param      bool      $border   */
+function print_form_editabletext($border = 0) {
   global $dbhost, $dbuname, $dbpass, $dbname, $intranet, $prefix;
 
   echo "<br>
@@ -151,7 +151,6 @@ function print_change_info() {
 <form action=\"install.php\" method=\"post\"><center>";
 
   print_form_editabletext(0);
-  print_form_hidden();
 
   echo "
 <input type=\"hidden\" name=\"op\" value=\"Submit\">
