@@ -1,6 +1,6 @@
 <?php
 /** Provide gui rendering functions for the installer.
- * @version      $Id: gui.php,v 1.2 2004/03/10 21:37:57 mbertier Exp $ $Name:  $
+ * @version      $Id: gui.php,v 1.3 2004/03/13 16:44:59 mbertier Exp $ $Name:  $
  * @package      Install
  * @license      GPL
  * @author       Gregor J. Rothfuss
@@ -25,7 +25,8 @@ function print_header() {
 <table width=\"80%\" align=\"center\"><tr><td>";
 }
 
-/** This function prints the "This is your setting" area (read-only confirmation form).
+/** This function prints the "This is your setting" area (read-only confirmation form)
+ * @param     bool      $border      toggles html border
  */
 function print_form_text( $border = 0 ) {
   global $dbhost, $dbuname, $dbpass, $dbname, $prefix, $dbtype, $intranet, $dbtabletype;
@@ -46,16 +47,7 @@ function print_form_text( $border = 0 ) {
 <td><font class=\"pn-normal\">$dbtype</font></td></tr>
 <tr><td align=\"left\"><font class=\"pn-normal\">" . _DBTABLETYPE . "</font></td>
 <td><font class=\"pn-normal\">$dbtabletype</font></td></tr>
-<tr><td align=\"left\"><font class=\"pn-normal\">" . _ISINTRANET . "</font></td>
-<td><font class=\"pn-normal\">";
-
-  if (!empty($intranet)) {
-    echo _YES;
-  } else {
-    $intranet = 0;
-    echo _NO;
-  }
-  echo "</font></td></tr></table>";
+</tr></table>";
 } 
 
 
@@ -149,7 +141,6 @@ function print_submit() {
 
   echo "
 <input type=\"submit\" name=\"op\" value=\"" . _BTN_NEWINSTALL . "\">
-</td><td><input type=\"submit\" name=\"op\" value=\"" . _BTN_UPGRADE . "\">
 </td></tr></table></form></center>";
 } 
 
