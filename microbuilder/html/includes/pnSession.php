@@ -1,52 +1,37 @@
 <?php
-// $Id: pnSession.php,v 1.1 2004/03/01 10:09:12 mbertier Exp $
-// ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2001 by the Post-Nuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Jim McDonald
-// Purpose of file: Session handling
-// ----------------------------------------------------------------------
-
-/**
- * Set up session handling
+/** Functions dedicated to session handling.
  *
+ * Session variables here are a bit 'different'.  Because they sit in the
+ * global namespace we use a couple of helper functions to give them their
+ * own prefix, and also to force users to set new values for them if they
+ * require.  This avoids blatant or accidental over-writing of session
+ * variables.
+ *
+ * @version      $Id: pnSession.php,v 1.2 2004/03/26 00:05:38 mbertier Exp $
+ * @package      
+ * @license      GPL
+ * @author       Jim McDonald
+ */
+
+
+/** Set up session handling.
  * Set all PHP options for PostNuke session handling
  */
-function pnSessionSetup()
-{
+function pnSessionSetup() {
     global $HTTP_SERVER_VARS;
 
+    // -- Defaults
+
+    // Base URI
     $path = pnGetBaseURI();
-    if (empty($path)) {
-        $path = '/';
-    }
+    if (empty($path)) $path = '/';
+
+    // Host
     $host = $HTTP_SERVER_VARS['HTTP_HOST'];
-    if (empty($host)) {
-        $host = getenv('HTTP_HOST');
-    }
+    if (empty($host)) $host = getenv('HTTP_HOST');
     $host = preg_replace('/:.*/', '', $host);
 
-    // PHP configuration variables
+    // -- PHP configuration variables
 
     // Stop adding SID to URLs
     ini_set('session.use_trans_sid', 0);
@@ -83,17 +68,12 @@ function pnSessionSetup()
             $lifetime = 788940000;
             break;
     }
+
+    //
     ini_set('session.cookie_lifetime', $lifetime);
     
-    if (pnConfigGetVar('intranet') == false) {
-        // Cookie path
-        ini_set('session.cookie_path', $path);
-
-        // Cookie domain
-        // only needed for multi-server multisites - adapt as needed
-        //$domain = preg_replace('/^[^.]+/','',$host);
-        //ini_set('session.cookie_domain', $domain);
-    }
+    //
+    ini_set('session.cookie_path', $path);
 
     // Garbage collection
     ini_set('session.gc_probability', 1);
@@ -114,22 +94,11 @@ function pnSessionSetup()
     return true;
 }
 
-/*
- * Session variables here are a bit 'different'.  Because they sit in the
- * global namespace we use a couple of helper functions to give them their
- * own prefix, and also to force users to set new values for them if they
- * require.  This avoids blatant or accidental over-writing of session
- * variables.
- *
-*/
 
-/**
- * Get a session variable
- *
- * @param name name of the session variable to get
+/** Get a session variable
+ * @param       string      $name       Name of the session variable to get
  */
-function pnSessionGetVar($name)
-{
+function pnSessionGetVar( $name ) {
     global $HTTP_SESSION_VARS;
 
     $var = "PNSV$name";
@@ -142,35 +111,31 @@ function pnSessionGetVar($name)
     return;
 }
 
-/** 
- * Set a session variable
- * @param name name of the session variable to set
- * @param value value to set the named session variable
- */
-function pnSessionSetVar($name, $value)
-{
-	global $HTTP_SESSION_VARS;
-    	$var = "PNSV$name";
 
-    	global $$var;
+/** Set a session variable.
+ * @param       string      $name       Name of the session variable to set
+ * @param       mixed       $value      Valuee to set the named session variable
+ */
+function pnSessionSetVar( $name, $value ) {
+	global $HTTP_SESSION_VARS;
+    $var = "PNSV$name";
+    
+    global $$var;
 	$$var = $value;
 	$HTTP_SESSION_VARS[$var] = $value;
 	session_register($var);
 
-    	return true;
+    return true;
 }
 
-/**
- * Delete a session variable
- * @param name name of the session variable to delete
+
+/** Delete a session variable.
+ * @param       string      $name       Name of the session variable to delete
  */
-function pnSessionDelVar($name)
-{
+function pnSessionDelVar( $name ) {
     $var = "PNSV$name";
 
     global $$var;
-	// Fix for PHP >4.0.6 By John Barnett (johnpb)
-    //unset($$var);	
 	unset($GLOBALS[$var]); 
 
     session_unregister($var);
@@ -178,19 +143,20 @@ function pnSessionDelVar($name)
     return true;
 }
 
-/**
- * Initialise session
+
+/** Initialise session. 
+ * @return      bool 
  */
-function pnSessionInit()
-{
+function pnSessionInit() {
     global $HTTP_SERVER_VARS;
 
+    // Fetch database aliases
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
     // First thing we do is ensure that there is no attempted pollution
     // of the session namespace
-    foreach($GLOBALS as $k=>$v) {
+    foreach($GLOBALS as $k => $v) {
         if (preg_match('/^PNSV/', $k)) {
             return false;
         }
@@ -206,20 +172,19 @@ function pnSessionInit()
     //Header('Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0');
     Header('Cache-Control: cache');
 
+    // Get session id
     $sessid = session_id();
 
     // Get (actual) client IP addr
     $ipaddr = $HTTP_SERVER_VARS['REMOTE_ADDR'];
-    if (empty($ipaddr)) {
-        $ipaddr = getenv('REMOTE_ADDR');
-    }
-    if (!empty($HTTP_SERVER_VARS['HTTP_CLIENT_IP'])) {
-        $ipaddr = $HTTP_SERVER_VARS['HTTP_CLIENT_IP'];
-    }
+    if (empty($ipaddr)) $ipaddr = getenv('REMOTE_ADDR');
+   
+    if (!empty($HTTP_SERVER_VARS['HTTP_CLIENT_IP']))  $ipaddr = $HTTP_SERVER_VARS['HTTP_CLIENT_IP'];
+
     $tmpipaddr = getenv('HTTP_CLIENT_IP');
-    if (!empty($tmpipaddr)) {
-        $ipaddr = $tmpipaddr;
-    }
+
+    if (!empty($tmpipaddr))   $ipaddr = $tmpipaddr;
+
     if  (!empty($HTTP_SERVER_VARS['HTTP_X_FORWARDED_FOR'])) {
         $ipaddr = preg_replace('/,.*/', '', $HTTP_SERVER_VARS['HTTP_X_FORWARDED_FOR']);
     }
@@ -227,37 +192,30 @@ function pnSessionInit()
     if  (!empty($tmpipaddr)) {
         $ipaddr = preg_replace('/,.*/', '', $tmpipaddr);
     }
+    // END IP addr retrieval
 
-
+    // Table columns used to store session data in database
     $sessioninfocolumn = &$pntable['session_info_column'];
     $sessioninfotable = $pntable['session_info'];
 
+    // Find out if session already exists
     $query = "SELECT $sessioninfocolumn[ipaddr]
               FROM $sessioninfotable
               WHERE $sessioninfocolumn[sessid] = '" . pnVarPrepForStore($sessid) . "'";
 
     $result = $dbconn->Execute($query);
 
-    if($dbconn->ErrorNo() != 0) {
-        return false;
+    if($dbconn->ErrorNo() != 0) return false; // Die on any error except "no results" 
+
+    // Session already exists, we define it as current
+    if (!$result->EOF) {
+        $result->Close();
+        pnSessionCurrent($sessid);
+
     } 
 
-    if (!$result->EOF) {
-// jgm - this has been commented out so that the nice AOL people
-//       can view PN pages, will examine full implications of this
-//       later
-//        list($dbipaddr) = $result->fields;
-        $result->Close();
-   
-//        if ($ipaddr == $dbipaddr) {
-            pnSessionCurrent($sessid);
-//        } else {
-//          // Mismatch - destroy the session
-//          session_destroy();
-//          pnRedirect('index.php');
-//          return false;
-//        }
-    } else {
+    // Session doesn't exist, let's create it
+    else {
         pnSessionNew($sessid, $ipaddr);
         
         // Generate a random number, used for
@@ -269,13 +227,12 @@ function pnSessionInit()
     return true;
 }
 
-/**
- * Continue a current session
- * @private
- * @param sessid the session ID
+
+/** Continue a current session
+ * @param      string      $sessid      The session ID
+ * @return     bool
  */
-function pnSessionCurrent($sessid)
-{
+function pnSessionCurrent( $sessid ) {
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
@@ -296,20 +253,22 @@ function pnSessionCurrent($sessid)
     return true;
 }
 
-/**
- * Create a new session
- * @private
- * @param sessid the session ID
- * @param ipaddr the IP address of the host with this session
+
+/** Create a new session.
+ * @param       string      $sessid      The session ID
+ * @param       string      $ipaddr      The IP address of the host with this session
+ * @return      bool
  */
-function pnSessionNew($sessid, $ipaddr)
-{
+function pnSessionNew( $sessid, $ipaddr ) {
+
+    // Fetch DB info
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
     $sessioninfocolumn = &$pntable['session_info_column'];
     $sessioninfotable = $pntable['session_info'];
 
+    // Insert session data into DB
     $query = "INSERT INTO $sessioninfotable
                  ($sessioninfocolumn[sessid],
                   $sessioninfocolumn[ipaddr],
@@ -325,54 +284,50 @@ function pnSessionNew($sessid, $ipaddr)
                   
     $dbconn->Execute($query);
 
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    if ( $dbconn->ErrorNo() != 0 ) return false;
 
     return true;
 }
 
-/**
- * PHP function to open the session
- * @private
- */
-function pnSessionOpen($path, $name)
-{
-    // Nothing to do - database opened elsewhere
-    return true;
-}
 
-/**
- * PHP function to close the session
- * @private
+/** PHP function to open the session.
+ * Nothing to do - database opened elsewhere.
+ *
+ * @param      string      $path      
+ * @param      string      $name      
  */
-function pnSessionClose()
-{
-    // Nothing to do - database closed elsewhere
-    return true;
-}
+function pnSessionOpen( $path, $name ) { return true; }
 
-/**
- * PHP function to read a set of session variables
- * @private
+
+/** PHP function to close the session.
+ * Nothing to do - database closed elsewhere.
+ * @return      bool
  */
-function pnSessionRead($sessid)
-{
+function pnSessionClose() { return true; }
+
+
+/** PHP function to read a set of session variables
+ * @param      string      $sessid      Session ID
+ * @return     bool
+ */
+function pnSessionRead( $sessid ) {
+
+    // Fetch DB info
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
     $sessioninfocolumn = &$pntable['session_info_column'];
     $sessioninfotable = $pntable['session_info'];
 
+    // Fetch data corresponding to $sessid
     $query = "SELECT $sessioninfocolumn[vars]
               FROM $sessioninfotable
               WHERE $sessioninfocolumn[sessid] = '" . pnVarPrepForStore($sessid) . "'";
     $result = $dbconn->Execute($query);
 
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    if ($dbconn->ErrorNo() != 0) return false;
 
+    // Populate results (if any) into $value
     if (!$result->EOF) {
         list($value) = $result->fields;
     } else {
@@ -380,68 +335,73 @@ function pnSessionRead($sessid)
     }
     $result->Close();
 
-    return($value);
+    return $value;
 }
 
-/**
- * PHP function to write a set of session variables
- * @private
+
+/** PHP function to write a set of session variables
+ * @param      string      $sessid      Session ID
+ * @param      array       $vars        Hash of session data to write ( array( 'varname' => 'varvalue' ) )
  */
-function pnSessionWrite($sessid, $vars)
-{
+function pnSessionWrite( $sessid, $vars ) {
+
+    // Fetch DB info
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
     $sessioninfocolumn = &$pntable['session_info_column'];
     $sessioninfotable = $pntable['session_info'];
 
+    // Modify data corresponding to $sessid
     $query = "UPDATE $sessioninfotable
               SET $sessioninfocolumn[vars] = '" . pnVarPrepForStore($vars) . "'
               WHERE $sessioninfocolumn[sessid] = '" . pnVarPrepForStore($sessid) . "'";
     $dbconn->Execute($query);
 
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    if ($dbconn->ErrorNo() != 0) return false;
 
     return true;
 }
 
-/**
- * PHP function to destroy a session
- * @private
+
+/** PHP function to destroy a session
+ * @param      string      $sessid      Session ID
+ * @return     bool
  */
-function pnSessionDestroy($sessid)
-{
+function pnSessionDestroy( $sessid ) {
+
+    // Fetch DB info
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
     $sessioninfocolumn = &$pntable['session_info_column'];
     $sessioninfotable = $pntable['session_info'];
 
+    // Erase DB entry correponding to $sessid
     $query = "DELETE FROM $sessioninfotable
               WHERE $sessioninfocolumn[sessid] = '" . pnVarPrepForStore($sessid) . "'";
     $dbconn->Execute($query);
 
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    if ($dbconn->ErrorNo() != 0) return false;
 
     return true;
 }
 
-/**
- * PHP function to garbage collect session information
- * @private
+
+/** PHP function to garbage collect session information
+ * @param       int      $maxlifetime     Session lifetime in microseconds
  */
-function pnSessionGC($maxlifetime)
-{
+function pnSessionGC( $maxlifetime ) {
+    
+    // Fetch DB info
     list($dbconn) = pnDBGetConn();
     $pntable = pnDBGetTables();
 
     $sessioninfocolumn = &$pntable['session_info_column'];
     $sessioninfotable = $pntable['session_info'];
 
+    // Delete session after a certain time
+    // Session lifetime in defined by security level
     switch (pnConfigGetVar('seclevel')) {
         case 'Low':
             // Low security - delete session info if user decided not to
@@ -466,9 +426,7 @@ function pnSessionGC($maxlifetime)
     $query = "DELETE FROM $sessioninfotable $where";
     $dbconn->Execute($query);
 
-    if ($dbconn->ErrorNo() != 0) {
-        return false;
-    }
+    if ($dbconn->ErrorNo() != 0) return false;
 
     return true;
 }
