@@ -1,9 +1,11 @@
 <?php 
 /** Functions providing multilanguage functionality to the installer.
- * @version      $Id: language.php,v 1.2 2004/03/13 01:35:01 mbertier Exp $
+ * @version      $Id: language.php,v 1.3 2004/03/19 15:44:18 mbertier Exp $
  * @package      Installer
  * @license      GPL
  * @author       Gregor J. Rothfuss
+ * 
+ * @todo         Find out why phpdoc doesn't document constants.
  */
 
 
