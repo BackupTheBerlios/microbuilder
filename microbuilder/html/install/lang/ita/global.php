@@ -1,33 +1,11 @@
 <?php 
-// File: $Id: global.php,v 1.1 2004/03/01 10:09:14 mbertier Exp $ $Name:  $
-// ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2001 by the Post-Nuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
-// LICENSE
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Valerio Santinelli <tanis@postnuke.com>
-// Purpose of file: Installer language defines for Italian language.
-// Maintainer: Valerio Santinelli <tanis@postnuke.com>
-// ----------------------------------------------------------------------
-//
+/** ITA strings. 
+ * @version     $Id: global.php,v 1.2 2004/03/19 14:31:08 mbertier Exp $
+ * @package     Installer 
+ * @subpackage  Lang 
+ * @license     GPL 
+ * @author      See /docs/CREDITS.txt */
+
 define('_ADMIN_EMAIL','Email dell\'Amministratore');
 define('_ADMIN_LOGIN','Login dell\'Amministratore');
 define('_ADMIN_NAME','Nome dell\'Amministratore');

@@ -1,14 +1,12 @@
-<?php // $Id: global.php,v 1.1 2004/03/01 10:09:15 mbertier Exp $ $Name:  $
-// ----------------------------------------------------------------------
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file: Installer language defines.
-// ----------------------------------------------------------------------
-// Author of Brazilian Portuguese version: Pedro Innecco
-// Corretions/additions by:
-// Pedro Innecco
-// Valdemar Biondo Junior
-// ----------------------------------------------------------------------
-//
+<?php
+/** X_BRA_POR strings. 
+ * @version     $Id: global.php,v 1.2 2004/03/19 14:31:08 mbertier Exp $
+ * @package     Installer 
+ * @subpackage  Lang 
+ * @license     GPL 
+ * @author      Pedro Innecco
+ * @author     Valdemar Biondo Junior  */
+
 define('_ADMIN_EMAIL','Email do administrador');
 define('_ADMIN_LOGIN','Usuário do administrador');
 define('_ADMIN_NAME','Nome do administrador');

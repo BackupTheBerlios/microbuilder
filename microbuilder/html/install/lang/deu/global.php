@@ -1,13 +1,11 @@
-<?php // File: $Id: global.php,v 1.1 2004/03/01 10:09:14 mbertier Exp $ $Name:  $
-//
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file: Installer language defines.
-//
-//
-// please post comments regarding german translation at
-// http://www.pncommunity.de
-// last changes: 2003/06/30 larsneo
-//
+<?php
+/** DEU strings. 
+ * @version     $Id: global.php,v 1.2 2004/03/19 14:31:08 mbertier Exp $
+ * @package     Installer 
+ * @subpackage  Lang 
+ * @license     GPL 
+ * @author      http://www.pncommunity.de */
+
 
 define('_VERSION_WARNING','Offizielle PostNuke Distributionen sind bei <a href="http://download.postnuke.com/" target="_blank">postnuke.com</a>verfügbar.<br>Service und Support zu PostNuke in deutscher Sprache unter <a href="http://www.post-nuke.net/" target="_blank">post-nuke.net</a>.');
 

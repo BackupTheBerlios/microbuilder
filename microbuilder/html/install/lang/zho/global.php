@@ -1,10 +1,11 @@
-<?php // File: $Id: global.php,v 1.1 2004/03/01 10:09:15 mbertier Exp $ $Name:  $
-// ----------------------------------------------------------------------
-// Original Author of file: Gregor J. Rothfuss
-// Purpose of file: Installer language defines.
-// ----------------------------------------------------------------------
-//
-	
+<?php
+/** ZHO strings. 
+ * @version     $Id: global.php,v 1.2 2004/03/19 14:31:08 mbertier Exp $
+ * @package     Installer 
+ * @subpackage  Lang 
+ * @license     GPL 
+ * @author      see docs/CREDITS.txt  */
+
 define('_ADMIN_EMAIL','管理员Email');
 define('_ADMIN_LOGIN','管理员登录名');
 define('_ADMIN_NAME','管理员姓名');
