@@ -1,18 +1,16 @@
 <?php 
 /** Declaration of various function used to check if installation is possible on target web server.
- * @version     $Id: check.php,v 1.2 2004/03/13 04:41:27 mbertier Exp $ $Name:  $
+ * @version     $Id: check.php,v 1.3 2004/03/13 16:31:19 mbertier Exp $ $Name:  $
  * @package     Install
  * @license     GPL
  * @author      Gregor J. Rothfuss
  */
 
 
-/**
- * Checks various php settings
- * by Bob Herald
+/** Checks various php settings
+ * @author      Bob Herald
  */
-function do_check_php()
-{
+function do_check_php() {
   if (phpversion() < "4.0.1") {
     $phpver = phpversion();
     echo "<br><font class=\"pn-title\">" . _PHP_CHECK_1 . $phpver . "<br>
@@ -80,24 +78,10 @@ function do_check_chmod() {
              ";
     $chmod = 1;
   } 
-
   
-  // Checking for NS-Quotes ?????!
-  $dirname = "modules/";
-
-  if ( is_dir($dirname) ) {
-    echo "<font class=\"pn-title\" color=red><br><b>" . _QUOTESCHECK_1 . "</b><br><br>";
-    echo "<img src='install/style/red_check.gif'  alt='' border='0' align='absmiddle'><font color=red><b>" . _QUOTESCHECK_2 . "</b></font></font><br><br>";
-    $dircheck = 1;
-
-  } else {
-
-    $dircheck = 0;
-  } 
-
-
+ 
   // Restart check
-  if ($chmod == 1 or $dircheck == 1) {
+  if ( $chmod == 1 ) {
     echo "<center><input type=\"hidden\" name=\"op\" value=\"Check\"><input type=\"submit\" value=\"" . _BTN_RECHECK . "\"></center></form></p>";
 
   } 
@@ -110,8 +94,7 @@ function do_check_chmod() {
 
 /** Generates and prints installation progress bar html code. 
  */
-function progress($percent)
-{
+function progress( $percent ) {
   echo "<table align=\"center\" width=\"400\" bgcolor=\"#000000\" cellspacing=\"1\" cellpadding=\"0\"><tr bgcolor=\"#cccccc\"><td><table cellspacing=\"0\" cellpadding=\"0\" width=\"$percent%\"><tr><td align=\"center\" bgcolor=\"#264CB7\"><font size=\"1\" color=\"white\">$percent%</font></td></tr></table></td></tr></table>";
 } 
 
