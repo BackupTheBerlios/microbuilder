@@ -12,7 +12,7 @@
  * - encoded:    0 for MySQL information unenccoded
  *               1 for encoded
  *
- * @version      $Id: config.php,v 1.2 2004/03/13 00:04:22 mbertier Exp $
+ * @version      $Id: config.php,v 1.3 2004/03/13 00:08:41 mbertier Exp $
  * @package      Installer
  * @license      GPL
  */
@@ -23,9 +23,9 @@ $pnconfig['dbtabletype'] = 'MyISAM';
 $pnconfig['dbhost'] = 'localhost';
 $pnconfig['dbuname'] = '';
 $pnconfig['dbpass'] = '';
-$pnconfig['dbname'] = 'Phoenix';
+$pnconfig['dbname'] = 'Microbuilder';
 $pnconfig['system'] = '0';
-$pnconfig['prefix'] = 'nuke';
+$pnconfig['prefix'] = 'mb';
 $pnconfig['encoded'] = '1';
 
 // ----------------------------------------------------------------------
