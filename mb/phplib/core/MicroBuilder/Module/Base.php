@@ -1,19 +1,25 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Module_Base
- * @version    $Id: Base.php,v 1.2 2004/07/13 02:17:53 mbertier Exp $
+ * @version    $Id: Base.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
 
 require_once 'core/MicroBuilder/Module/Action/Factory.php';
+require_once 'core/MicroBuilder/Module/ErrorCallback.php';
 
 /** Module compatible MicroBuilder
  * @package    core
  */
 class MicroBuilder_Module_Base  {
 
+    /** @access public */
     var $__name = null;
+
+    /** @access public */
     var $__summary = null;
+
+    /** @access public */
     var $__default_action = null;
 
 
@@ -132,6 +138,9 @@ class MicroBuilder_Module_Base  {
         // Error Handling
         // Modules use their own ErrorStack and ErrorCallback
         $this->err =& PEAR_ErrorStack::singleton( $this->__name );
+        $callback =& new MicroBuilder_Module_ErrorCallback;
+        $callback->_module_name = $this->__name;
+        $this->err->setDefaultCallback( array(&$callback, 'errorCallback') );
         
         $log =& Log::singleton( 'file' );
     }

@@ -1,6 +1,6 @@
 <?php
 /** Déclaration de la classe MicroBuilder_PageController
- * @version    $Id: PageController.php,v 1.2 2004/07/13 02:17:53 mbertier Exp $
+ * @version    $Id: PageController.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -84,7 +84,7 @@ class MicroBuilder_PageController  {
         }
 
         // Navigation menu
-        // DIRTY -- use accessor
+        // TODO -- use accessor
         $this->theme->_navItems = $this->ui->getNavItems();
         
         // Blocks
@@ -144,7 +144,8 @@ class MicroBuilder_PageController  {
         //        $conf->parseConfig( '/home/mbertier/dev/htdocs/mb/conf/microbuilder-conf.ini', 'GenericConf' );
         $conf->parseConfig( '/var/www/localhost/mb/conf/microbuilder-conf.ini', 'GenericConf' );
         $confroot =& $conf->getRoot();
-        $this->conf =& $confroot->toArray();
+        $confarray = $confroot->toArray();
+        $this->conf =& $confarray['root'];
 
 
         // Error Handling
@@ -155,19 +156,23 @@ class MicroBuilder_PageController  {
         $this->err->setDefaultCallback( array(&$errcallback, 'errorCallback') );
 
         // -- Logger
-        $logpath = $this->conf['root']['log_file'];
+        $logpath = $this->conf['prefix'] . '/logs/' . $this->conf['log_file'];
         $log =& Log::singleton( 'file',$logpath, 'MicroBuilder error log' );
         PEAR_ErrorStack::setDefaultLogger( $log );
+
            
+        // Constants
+        // -- this conf constants are needed by factories to access conf (factories are static)
+        define( "MB_CONF_PREFIX", $this->conf['prefix'] );
+
 
         // Theme
         // -- UI description
         $this->ui =& new MicroBuilder_UI;
 
         // -- Theme object
-        $this->theme =& MicroBuilder_Theme_Factory::make( $this->conf['root']['default_theme'] );
-        $this->theme->setTitle( $this->conf['root']['site_name']);
-
+        $this->theme =& MicroBuilder_Theme_Factory::make( $this->conf['default_theme'] );
+        $this->theme->setTitle( $this->conf['site_name']);
     }
     
 }

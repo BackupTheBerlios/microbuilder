@@ -1,6 +1,6 @@
 <?php
 /** Déclaration de la classe MicroBuilder_Theme_Factory
- * @version    $Id: Factory.php,v 1.2 2004/07/13 02:17:53 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.3 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -34,7 +34,7 @@ class MicroBuilder_Theme_Factory  {
         require_once $path;
         $themeclass = "Theme_$theme_name";
         $t =& new $themeclass;
-        
+            
         return $t;
     }
 
@@ -48,13 +48,13 @@ class MicroBuilder_Theme_Factory  {
      * @param      string      $theme_name
      */
     function _getThemeClassPath( $theme_name ) {
-        $path = $_SERVER['DOCUMENT_ROOT'] . "/mb/phplib/themes/$theme_name/$theme_name.php";
-
+        $path = MB_CONF_PREFIX . "/phplib/themes/$theme_name/$theme_name.php";
         if ( ! file_exists($path) ) {
             $errstack =& PEAR_ErrorStack::singleton( 'MicroBuilder' );
-            $errstack->push( 1, 'fatal',
+            $errstack->push( 1, 'error',
                              array('theme' => $theme_name), 
                              "Requested theme '$theme_name' does not exist !" );
+            return null;
         }
 
         return $path;

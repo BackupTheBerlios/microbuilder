@@ -1,6 +1,6 @@
 <?php
-/** Module action (>>>class_name<<<) declaration.
- * @version    $Id: TEMPLATE.action.php.tpl,v 1.1 2004/07/13 02:00:40 mbertier Exp $
+/** Module action ModuleAction_(>>>assoc_module<<<)_(>>>action_name<<<) declaration.
+ * @version    $Id: TEMPLATE.action.php.tpl,v 1.2 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -8,7 +8,7 @@
 /** Actions base class */
 require_once 'core/MicroBuilder/Module/Action/Base.php';
 
-/** Action description.
+/** (>>>action_summary<<<)
  * @package    modules
  * @subpackage actions
  */

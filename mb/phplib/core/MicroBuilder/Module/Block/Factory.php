@@ -1,6 +1,6 @@
 <?php
 /** Déclaration de la classe MicroBuilder_ModuleBlock_Factory
- * @version    $Id: Factory.php,v 1.1 2004/07/13 02:17:53 mbertier Exp $
+ * @version    $Id: Factory.php,v 1.2 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -61,7 +61,7 @@ class MicroBuilder_ModuleBlock_Factory  {
      * @param      string      $block_name
      */
     function _getBlockClassPath( $module_name, $block_name ) {
-        $path = $_SERVER['DOCUMENT_ROOT'] . "/mb/phplib/modules/$module_name/blocks/$block_name.php";
+        $path = MB_CONF_PREFIX . "/phplib/modules/$module_name/blocks/$block_name.php";
         if ( ! file_exists($path) ) {
             $errstack =& PEAR_ErrorStack::singleton( 'MicroBuilder' );
             $errstack->push( MB_NONEXISTENT_BLOCK,

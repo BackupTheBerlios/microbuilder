@@ -1,6 +1,6 @@
 <?php
 /** Module (>>>class_name<<<) declaration
- * @version    $Id: TEMPLATE.module.php.tpl,v 1.1 2004/07/13 02:00:40 mbertier Exp $
+ * @version    $Id: TEMPLATE.module.php.tpl,v 1.2 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -8,20 +8,20 @@
 /** Module base */
 require_once 'core/MicroBuilder/Module/Base.php';
 
-/** 
+/** (>>>module_summary<<<)
  * @package    modules
  */
-class (>>>class_name<<<) extends MicroBuilder_Module_Base {
+class Module_(>>>module_name<<<) extends MicroBuilder_Module_Base {
 
 # ---- DESCRIPTION
 
     /** Module name 
      * @var string */
-    var $__name = '';
+    var $__name = '(>>>module_name<<<)';
 
     /** Module summary 
      * @var string */
-    var $__summary;
+    var $__summary  ='(>>>module_summary<<<)';
 
     
 
@@ -32,7 +32,7 @@ class (>>>class_name<<<) extends MicroBuilder_Module_Base {
 # ---- METHODES PUBLIQUES
 
     /** Constructeur. */
-    function (>>>class_name<<<) () {
+    function Module_(>>>module_name<<<) () {
         MicroBuilder_Module_Base::MicroBuilder_Module_Base();
     }
 

@@ -1,6 +1,6 @@
 <?php
-/** Module block (>>>class_name<<<) declaration.
- * @version    $Id: TEMPLATE.block.php.tpl,v 1.1 2004/07/13 02:00:40 mbertier Exp $
+/** Module block ModuleBlock_(>>>module_name<<<)_(>>>block_name<<<) declaration.
+ * @version    $Id: TEMPLATE.block.php.tpl,v 1.2 2004/07/14 23:56:12 mbertier Exp $
  * @author     Tristan Rivoallan <mbertier@parishq.net>
  * @license    GPL
  */
@@ -8,7 +8,7 @@
 /** Blocks base class */
 require_once 'core/MicroBuilder/Module/Block/Base.php';
 
-/** Block description.
+/** (>>>block_summary<<<)
  * @package    modules
  * @subpackage blocks
  */
@@ -38,7 +38,7 @@ class ModuleBlock_(>>>module_name<<<)_(>>>block_name<<<) extends MicroBuilder_Mo
 # ---- METHODES PUBLIQUES
 
     /** Constructeur. */
-    function (>>>class_name<<<) () {
+    function ModuleBlock_(>>>module_name<<<)_(>>>block_name<<<) () {
         MicroBuilder_ModuleBlock_Base::MicroBuilder_ModuleBlock_Base();
     }
 
