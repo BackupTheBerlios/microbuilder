@@ -1,38 +1,26 @@
 <?php 
-// File: $Id: modify_config.php,v 1.1 2004/03/01 10:09:13 mbertier Exp $ $Name:  $
-// ----------------------------------------------------------------------
-// POST-NUKE Content Management System
-// Copyright (C) 2001 by the Post-Nuke Development Team.
-// http://www.postnuke.com/
-// ----------------------------------------------------------------------
-// Based on:
-// PHP-NUKE Web Portal System - http://phpnuke.org/
-// Thatware - http://thatware.org/
-// ----------------------------------------------------------------------
-// LICENSE
+/** Function dedicated to editing the config.php file in order to reflect user choices.
+ * @version      $Id: modify_config.php,v 1.2 2004/03/13 03:00:25 mbertier Exp $
+ * @package      Installer
+ * @license      GPL
+ * @todo         Use XML instead !
+ */
 
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License (GPL)
-// as published by the Free Software Foundation; either version 2
-// of the License, or (at your option) any later version.
 
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
+# -- GLOBALS
+$reg_src = array();
+$reg_rep = array();
 
-// To read the license please visit http://www.gnu.org/copyleft/gpl.html
-// ----------------------------------------------------------------------
-// Original Author of file: Scott Kirkwood (scott_kirkwood@bigfoot.com)
-// Purpose of file: Routines to modify the config.php file.
-// General routine modify_file() is useful in it's own right.
-// ----------------------------------------------------------------------
-// This is the last update to this script before the new version is finished.
-// mod_file is general, give it a source file a destination.
-// an array of search patterns (Perl style) and replacement patterns
-// Returns a string which starts with "Err" if there's an error
-function modify_file($src, $dest, $reg_src, $reg_rep)
-{
+
+/** Applies regex substitution to source file and outputs result to dest_file.
+ * @param     string      $src      Source file path
+ * @param     string      $dest     Destination file path
+ * @param     array       $reg_src  Array of PCRE patterns to match
+ * @param     array       $reg_rep  Array of substitutions to apply to matched patterns
+ *
+ * @return    string      A string starting with Err_ in case of problem
+ */
+function modify_file($src, $dest, $reg_src, $reg_rep) {
     $in = @fopen($src, "r");
     if (! $in) {
         return _MODIFY_FILE_1 . " $src";
@@ -81,16 +69,18 @@ function modify_file($src, $dest, $reg_src, $reg_rep)
     // Success!
     return "$src updated with $lines lines of changes, backup is called $dest";
 } 
-// Two global arrays
-$reg_src = array();
-$reg_rep = array();
-// Setup various searches and replaces
-// Scott Kirkwood
-function add_src_rep($key, $rep)
-{
+
+
+/** Add search / replace patterns used to modify file.
+ * @param      string     $key       Key to search for (variable)
+ * @param      string     $rep       Replacement (value)
+ * @author     Scott Kirkwood  */
+function add_src_rep($key, $rep) {
     global $reg_src, $reg_rep; 
+
     // Note: /x is to permit spaces in regular expressions
     // Great for making the reg expressions easier to read
+
     // Ex: $pnconfig['sitename'] = stripslashes("Your Site Name");
     $reg_src[] = "/ \['$key'\] \s* = \s* stripslashes\( (\' | \") (.*) \\1 \); /x";
     $reg_rep[] = "['$key'] = stripslashes(\\1$rep\\1);"; 
@@ -102,6 +92,8 @@ function add_src_rep($key, $rep)
     $reg_rep[] = "['$key'] = $rep;";
 } 
 
+
+/** Displays error info. */
 function show_error_info()
 {
     global $dbhost, $dbuname, $dbpass, $dbname, $prefix, $dbtype, $dbtabletype;
@@ -119,9 +111,11 @@ function show_error_info()
         </tt>
 EOT;
 } 
-// Update the config.php file with the database information.
-function update_config_php($db_prefs = false)
-{
+
+
+/** Update the config.php file with the database information. (master function) */
+function update_config_php($db_prefs = false) {
+
     global $reg_src, $reg_rep;
     global $dbhost, $dbuname, $dbpass, $dbname, $prefix, $dbtype, $dbtabletype;
     global $email, $url, $HTTP_ENV_VARS;
@@ -133,6 +127,7 @@ function update_config_php($db_prefs = false)
     add_src_rep("prefix", $prefix);
     add_src_rep("dbtype", $dbtype);
     add_src_rep("dbtabletype", $dbtabletype);
+
     if (@strstr($HTTP_ENV_VARS["OS"], "Win")) {
         add_src_rep("system" , '1');
     } else {
