@@ -1,0 +1,37 @@
+html {
+ background-color: #000;
+ color: #FFF;
+}
+
+p.error {
+  font-weight: bold;
+ 	color: #FF0000;
+}
+
+
+div {
+  border: dotted 1px white;
+	margin: 5px;
+  padding: 5px;
+}
+
+
+
+div.block {
+	border: solid 1px green;
+}
+
+div#legend {
+  width: 15%;
+	float:right;
+  background-color: #222;
+}
+
+div#navigation {
+	 border: solid 1px #FFFF00;
+}
+
+div#container {
+ 	border: solid 1px white;
+}
+
