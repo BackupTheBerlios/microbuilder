@@ -1,0 +1,169 @@
+BODY {
+background: #FFFFFF;
+color: #000000;
+font-family: Tahoma, Verdana, sans-serif;
+margin-top: 0;
+margin-left: 0;
+margin-right: 0;
+margin-bottom: 0;
+}
+A:link {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A:active {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A:visited {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A:hover {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-title {
+color: #0000FF;
+font: bold 12px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-title:active {
+color: #0000FF;
+font: bold 12px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-title:visited {
+color: #0000FF;
+font: bold 12px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-title:hover {
+color: #0000FF;
+font: bold 12px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-normal:link {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-normal:active {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-normal:visited {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-normal:hover {
+color: #0000FF;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-sub:link {
+color: #0000FF;
+font: 10px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-sub:active {
+color: #0000FF;
+font: 10px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-sub:visited {
+color: #0000FF;
+font: 10px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-sub:hover {
+color: #0000FF;
+font: 10px Tahoma, Verdana, sans-serif;
+text-decoration: underline;
+}
+A.pn-logo:link {
+color: #0000FF;
+font-size: 16px;
+font-weight: bold;
+font-family: Tahoma, Verdana, sans-serif;
+letter-spacing: 3px;
+text-decoration: none;
+}
+A.pn-logo:active {
+color: #0000FF;
+font-size: 16px;
+font-weight: bold;
+font-family: Tahoma, Verdana, sans-serif;
+letter-spacing: 3px;
+text-decoration: none;
+}
+A.pn-logo:visited {
+color: #0000FF;
+font-size: 16px;
+font-weight: bold;
+font-family: Tahoma, Verdana, sans-serif;
+letter-spacing: 3px;
+text-decoration: none;
+}
+A.pn-logo:hover {
+color: #0000FF;
+font-size: 16px;
+font-weight: bold;
+font-family: Tahoma, Verdana, sans-serif;
+letter-spacing: 3px;
+text-decoration: none;
+}
+.pn-logo {
+color: #000000;
+font-size: 16px;
+font-weight: bold;
+font-family: Tahoma, Verdana, sans-serif;
+letter-spacing: 3px;
+text-decoration: none;
+}
+.pn-logo-small {
+color: #000000;
+font-size: 11px;
+font-weight: bold;
+font-family: Tahoma, Verdana, sans-serif;
+text-decoration: none;
+}
+.pn-pagetitle {
+color: #000000;
+font: bold 14px Tahoma, Verdana, sans-serif;
+text-decoration: none;
+}
+.pn-title {
+color: #000000;
+font: bold 12px Tahoma, Verdana, sans-serif;
+text-decoration: none;
+}
+.pn-storytitle {
+color: #000000;
+font: bold 12px Tahoma, Verdana, sans-serif;
+letter-spacing: 3px;
+text-decoration: none;
+}
+.pn-normal {
+color: #000000;
+font: 11px Tahoma, Verdana, sans-serif;
+text-decoration: none;
+text-align: justify;
+}
+.pn-sub {
+color: #000000;
+font: 10px Tahoma, Verdana, sans-serif;
+text-decoration: none;
+}
+INPUT.pn-text {
+background : #FFFFFF;
+color: #000000;
+border: solid 1px #000000;
+font-size: 8px;
+}

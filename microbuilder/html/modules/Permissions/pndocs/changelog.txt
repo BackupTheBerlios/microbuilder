@@ -1,0 +1,56 @@
+Change Summary:
+===============
+v0.1
+- Original version from Jim McDonald.
+v0.2 (2003-06-20)
+- Database-changes:	None
+- Script-changes:	Permission-module (admin.php / adminapi.php / language-files)
+v0.3 (not released)
+- Database-changes:	None
+- Script-changes:	Permission-module (admin.php / adminapi.php / language-files)
+v0.4 (2003-06-25)
+- Database-changes:	None
+- Script-changes:	Permission-module (admin.php / adminapi.php / language-files / graphics)
+
+Description V0.1:
+=================
+Original version as shipped with PostNuke up to PN.723
+
+Description V0.2:
+=================
+The PN-permission system is hard enough as it stands.
+Since I'm also using it for an Intranet-site, I'm quite heavily relying on it.
+There are (i.m.h.o.) a couple of badly needed improvements to be made on the
+admin-part.
+
+This patch allows you (or at least, the site-admin...) to insert a new permission
+directly at the spot where it is supposed to be.
+Especially with larger permission-lists, this will save you the hassle of 'dragging'
+the newly added permission up to where it should be.
+
+Description V0.3:
+=================
+First of all, security has been tightened up. It seems certain functions of the Permission-
+module were accessible without having the right permissions. Fixed (in an almost paranoid way).
+
+FilterView:
+Furthermore, you can now select a group and get a listing of the permissions that apply to that
+group (i.e. permissions set for 'All Groups' and that specific group in one list). To remind you
+of what you're doing, a warningmessage appears on top.
+Moving permissions around while in FilterView is limited. After all, it is easy to forget the 
+permissions of other groups and unintentionally swap a permission of a group that is not shown.
+Well, it seems harder than it is, I guess. The module will prohibit permission-dragging if you're
+about to make potential mistakes. Dragging in full view still works as it used to, of course.
+Inserting and modifying permissions in FilterView is possible, though restricted to the group that
+is currently shown.
+
+B.T.W.: the module-pictures have been moved to the module-directory. No more global pics.
+
+Description V0.4:
+=================
+I'm not sure if this can still make it into the PN.726 core, but I didn't want to release it before
+it had the features I needed. Otherwise there would be upgrade after upgrade.
+It now has:
+- In-list modifying;
+- In-list creation of new and inserted permissions;
+- User-selectable settings as to using the filterlist, the warningbar and the rowheight.

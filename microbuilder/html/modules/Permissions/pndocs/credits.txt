@@ -1,0 +1,32 @@
+POST-NUKE Content Management System
+Copyright (C) 2001 by the Post-Nuke Development Team.
+http://www.postnuke.com/
+----------------------------------------------------------------------
+Original Author of file: Jim McDonald
+Extensive patching by: Marc Maes :)
+
+Marc Maes, 25 june 2003
+
+WARNING:
+========
+THIS IS A HACK OF A CORE POSTNUKE-MODULE !!!!
+USE AT YOUR OWN RISK.
+
+If you die instantly, loose your wife and/or kids, blow up your computer
+or suffer any other loss by using this patch, I will not be responsible.
+
+This particular patch is based on the 0.7.2.2 / 0.7.2.3 Permission-system.
+(I have not tested it on any other versions, nor do I intend to.
+Feel free to try, but be warned.)
+
+
+Comments/Questions:
+===================
+If you have any positive comments/questions/improvements, I will be glad to hear them.
+For all flames, insults and other crap, mail to deaf@thebigvoid.org
+
+
+Kind regards,
+M. Maes
+admin@mmaes.com
+http://www.mmaes.com

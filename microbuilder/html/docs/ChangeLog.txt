@@ -1,0 +1,95 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++
+We've got something to cheer about! PostNuke .726 is Ready for Download
+________________________
+
+After a few weeks of additional hard work .726 is ready for download.
+This release is an excellent package and provides a system you can use
+on any professional site today! Read on for more details. This also
+marks a turning point where we will be taking the software to a new
+level with new functionality. One thing you can always count on though
+is the paradigm shift will be transparent to the end user. Our goal is
+to provide you with flexibility without the complexity. I know this is a
+challenge but we're up for it.
+
+This message is a chance for me to let you know what we've been working
+on since the last release.
+
+This release has several cosmetic changes as well as usability changes
+we're sure you'll enjoy using.
+
+HTML 4.01 & CSS Compliance: Credit to Mark West and larsneo for taking
+on the project. This was a task that required touching many files within
+the system to make sure it all parsed correctly and validated.
+
+Permissions Systems Updates: Credit to Marc Maes who contributed the
+code on the main mods site and thanks to larsneo for integrating into
+the main core. Additional credit goes to Adam and Mark West for code
+refinement. The new permissions provides enhancements to inserting
+permission, in-table editing/inserting and adding of permissions,
+filtering of shown permissions allowing you to show all the permissions
+that apply to a specific group. There are layout refinements and updates
+the configurations.
+
+A note of special thanks and credit goes to Andreas (aka larsneo) who
+went through every module ensuring that all have the relevant
+permissions calls and the WHERE clause fixes were applied to all modules
+as appropriate to prevent any potential SQL injection issues.
+
+ADOdb : credit to larsneo Database Abstraction Layer Upgraded to 3.60:
+More Information about ADODB can be found at
+http://php.weblogs.com/ADODB_Manual
+
+AvantGo - Mobile News Module Update: Credit to larsneo .726 note:
+permissions for 'Stories: Story’ and 'Topics: Topic’ components are
+fixed
+
+As many of you know the AvantGo module allows you to pull information
+from the web to read on your PDA, Pocket, or next-generation phone.
+
+Autolinks Permissions Updates: Credit to larsneo.  Fixed permission
+schema, enhanced module security against script injection
+
+Admin Message Update: Credit to aarrog.  Applied patch #275 (use
+permissions to view admin messages)
+
+A big thx to Michael Cohen : for providing basic source code auditing
+and due to various security related fixes over the complete code base an
+update is highly recommended.
+
+New System Admin Icons: Credit to vworld.
+
+- Various fixes and updates to language files
+- Print Page Update
+- New stats icons added
+- New print page and refer article icons added
+- Increased size of submit boxes
+- New members list icons
+- New Members List title icon
+- Updated topic images for a more unified look/feel
+- Fixed empty line behind closing ?> tag (thx to geekster)
+- Updated WHERE clauses [larsneo]
+- Added default table type entry for pnconfig array
+- Fixed TEXTAREA problem in error.php
+- Minor fix in footer
+- Backport of .8 fixes
+- Additional HTML compliance fixes
+- lensdebug.inc.php        -  backported .8 fixes
+- pnAPI.php - removed re-correction of & html entity for html
+compliance. - pnHTML.php -  backported .8 fixes
+- pnMod.php - added array check on args (thx to rabbitt)
+- pnUser.php  -  fix for bugs #339 and #389
+- queryutil.php -  backported .8 fixes
+- security.php -  fixes for generic/specific permission checks (thx to
+Ben Wynn)
+- banners.php -  fixed permissions
+- big.php - fixed permissions
+- rss.php         Addresses patch #233 (CDATA tag not removed when fetching
+RSS) - Includes/Search: HTML compliancy issues fixed and permissions
+issues regarding results count.
+- Install Issues: Fixes and installation updates
+- Web Links Updates included HTML compliancy issues and log message
+issues.
+
+I apologize to anyone I didn't mention in this post. Everyone has done a
+great job and deserves every bit of recognition they receive in the Open
+Source world!
