@@ -1,6 +1,6 @@
 <?php
 /** This script creates needed tables in database at install time.
- * @version      $Id: newtables.php,v 1.3 2004/03/13 15:56:28 mbertier Exp $
+ * @version      $Id: newtables.php,v 1.4 2004/03/18 11:11:21 mbertier Exp $
  * @package      Postnuke
  * @subpackage   Install
  */
@@ -20,6 +20,7 @@ function dosql($table,$sql) {
    }
    echo "<br><font class=\"pn-sub\">".$table." "._MADE."</font>";
 }
+
 
 # -- Connect to database
 $dbconn = dbconnect($dbhost, $dbuname, $dbpass, $dbname, $dbtype);
@@ -56,17 +57,6 @@ CREATE TABLE ".$prefix."_blocks_buttons (
   pn_url varchar(254) NOT NULL default '',
   pn_images longtext NOT NULL,
   PRIMARY KEY  (pn_id)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-# -- _counter
-$table = $prefix.'_counter';
-$sql = "
-CREATE TABLE ".$prefix."_counter (
-  pn_type varchar(80) NOT NULL default '',
-  pn_var varchar(80) NOT NULL default '',
-  pn_count int(11) unsigned NOT NULL default '0'
 ) TYPE = " . $dbtabletype . "
 ";
 dosql($table,$sql);
@@ -181,18 +171,6 @@ CREATE TABLE ".$prefix."_referer (
   pn_rid int(11) NOT NULL auto_increment,
   pn_url varchar(254) NOT NULL default '',
   pn_frequency int(15) default NULL,
-  PRIMARY KEY  (pn_rid)
-) TYPE = " . $dbtabletype . "
-";
-dosql($table,$sql);
-
-$table = $prefix.'_related';
-$sql = "
-CREATE TABLE ".$prefix."_related (
-  pn_rid int(11) NOT NULL auto_increment,
-  pn_tid int(11) NOT NULL default '0',
-  pn_name varchar(30) NOT NULL default '',
-  pn_url varchar(254) NOT NULL default '',
   PRIMARY KEY  (pn_rid)
 ) TYPE = " . $dbtabletype . "
 ";
